@@ -1,0 +1,33 @@
+CREATE TABLE Users (
+    id VARCHAR PRIMARY KEY,
+    userName VARCHAR UNIQUE NOT NULL,
+    lastName VARCHAR NOT NULL,
+    email VARCHAR UNIQUE NOT NULL,
+    password VARCHAR NOT NULL
+);
+
+CREATE TABLE Posts (
+    id VARCHAR PRIMARY KEY,
+    url VARCHAR NOT NULL,  
+    post VARCHAR NOT NULL,
+    userId VARCHAR NOT NULL,
+    postedAt INTEGER NOT NULL,
+    FOREIGN KEY (userId) REFERENCES Users (id)
+);
+
+CREATE TABLE Comments (
+    id VARCHAR PRIMARY KEY,  
+    comment VARCHAR NOT NULL,
+    userId VARCHAR NOT NULL,
+    postId VARCHAR NOT NULL,
+    FOREIGN KEY (userId) REFERENCES Users (id),
+    FOREIGN KEY (postId) REFERENCES Posts (id)
+);
+
+CREATE TABLE Likes (
+    id VARCHAR PRIMARY KEY, 
+    postId VARCHAR NOT NULL,
+    userId VARCHAR NOT NULL,
+    FOREIGN KEY (postId) REFERENCES Posts (id)
+    FOREIGN KEY (userId) REFERENCES Users (id)
+);
