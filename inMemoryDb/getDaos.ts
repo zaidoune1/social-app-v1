@@ -10,4 +10,4 @@ export interface GetDaos
     postsDaos,
     usersDaos {}
 
-export const db = InMemoryDataBase;
+export const db = new InMemoryDataBase();
