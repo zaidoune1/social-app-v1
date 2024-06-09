@@ -17,7 +17,7 @@ export type getAllUsersReq = {};
 export type getUserReq = {};
 
 export type getUserRes = {
-  user: user | void;
+  user: Promise<user | void>;
   message: string;
 };
 
@@ -26,11 +26,16 @@ export type deleteUserReq = {};
 
 export type deleteUserRes = {
   message: string;
+  user: user;
 };
 
 // update
-export type updateUserReq = {};
+export type updateUserReq = Pick<
+  user,
+  "email" | "lastName" | "userName" | "password"
+>;
 
 export type updateUserRes = {
-  user: user;
+  user: user | void;
+  message?: string;
 };

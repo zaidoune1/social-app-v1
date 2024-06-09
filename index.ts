@@ -1,5 +1,11 @@
 import express, { ErrorRequestHandler } from "express";
-import { getUser, getUsers, userAdd } from "./src/handlers/userHandlers";
+import {
+  deleteUser,
+  getUser,
+  getUsers,
+  updateUser,
+  userAdd,
+} from "./src/handlers/userHandlers";
 import { initDb } from "./src/utils/dbCall";
 
 const app = express();
@@ -12,6 +18,8 @@ const app = express();
   app.get("/users", getUsers);
   app.post("/user", userAdd);
   app.get("/user", getUser);
+  app.delete("/user", deleteUser);
+  app.put("/user", updateUser);
 
   const errorHandling: ErrorRequestHandler = (err, req, res, next) => {
     return res.status(400).send(`error handilng : ${err}`);

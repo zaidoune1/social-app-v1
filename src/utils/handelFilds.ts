@@ -1,10 +1,10 @@
-export const handelError = (prams: any): string[] | any => {
+export const handelError = (requiredFields: any): string[] | [] => {
   let result: string[] = [];
-  let obj: any;
+  let field: string;
 
-  for (obj in prams) {
-    if (prams[obj] === "") {
-      result.push(obj);
+  for (field in requiredFields) {
+    if (!requiredFields[field] || requiredFields[field] === "") {
+      result.push(field);
     }
   }
   return result;
