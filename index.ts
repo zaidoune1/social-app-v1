@@ -1,18 +1,23 @@
 import express, { ErrorRequestHandler } from "express";
 import { getAllUsers, userAdd } from "./src/handlers/userHandlers";
+import { initDb } from "./src/utils/dbCall";
 
 const app = express();
 
-const PORT = process.env.PORT || 3000;
-app.use(express.json());
-app.get("/users", getAllUsers);
-app.post("/user", userAdd);
+(async () => {
+  await initDb();
 
-const errorHandling: ErrorRequestHandler = (err, req, res, next) => {
-  return res.status(400).send(`error handilng : ${err}`);
-};
-app.use(errorHandling);
+  const PORT = process.env.PORT || 3000;
+  app.use(express.json());
+  app.get("/users", getAllUsers);
+  app.post("/user", userAdd);
 
-app.listen(PORT, () => {
-  console.log("server runnig in port" + " " + PORT);
-});
+  const errorHandling: ErrorRequestHandler = (err, req, res, next) => {
+    return res.status(400).send(`error handilng : ${err}`);
+  };
+  app.use(errorHandling);
+
+  app.listen(PORT, () => {
+    console.log("server runnig in port" + " " + PORT);
+  });
+})();

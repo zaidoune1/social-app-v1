@@ -1,13 +1,13 @@
 import { likes } from "../likes";
 
 export interface likesDaos {
-  addLikes(like: likes): void;
+  addLikes(like: likes): Promise<void>;
 
-  getOneLikes(id: number): likes | void;
+  getOneLikes(id: number): Promise<likes | void>;
 
-  getAllLikes(): likes[] | void;
+  getAllLikes(): Promise<likes[] | void>;
 
-  deleteLikes(id: number): string | void;
+  deleteLikes(id: number): Promise<string | void>;
 
-  updateLikes(id: number, like: likes): likes | void;
+  updateLikes(id: number, like: likes): Promise<likes | void>;
 }

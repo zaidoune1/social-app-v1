@@ -1,13 +1,13 @@
 import { posts } from "../posts";
 
 export interface postsDaos {
-  addPost(post: posts): void;
+  addPost(post: posts): Promise<void>;
 
-  getOnePost(id: number): posts | void;
+  getOnePost(id: number): Promise<posts | void>;
 
-  getAllPostes(posts: posts[]): posts[] | void;
+  getAllPostes(posts: posts[]): Promise<posts[] | void>;
 
-  deletePosts(id: number): string | void;
+  deletePosts(id: number): Promise<string | void>;
 
-  updatePost(id: number, post: posts): posts | void;
+  updatePost(id: number, post: posts): Promise<posts | void>;
 }

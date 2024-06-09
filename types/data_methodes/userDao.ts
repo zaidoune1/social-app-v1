@@ -5,9 +5,9 @@ export interface usersDaos {
 
   getOneUser(id: number): user | void;
 
-  getAllUsers(): user[] | void;
+  getAllUsers(): Promise<user[] | void>;
 
-  deleteUsers(id: number): string | void;
+  deleteUsers(id: number): Promise<string | void>;
 
-  updateUsers(id: number, user: user): user | void;
+  updateUsers(id: number, user: user): Promise<user | void>;
 }
