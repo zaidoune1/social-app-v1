@@ -2,7 +2,10 @@ import { user } from "../../types/user";
 
 // add user
 export type createUserRes = {};
-export type createUserReq = Pick<user, "email" | "name" | "password">;
+export type createUserReq = Pick<
+  user,
+  "id" | "email" | "userName" | "password" | "lastName"
+>;
 
 // get all users
 export type getAllUsersRes = {
@@ -14,7 +17,8 @@ export type getAllUsersReq = {};
 export type getUserReq = {};
 
 export type getUserRes = {
-  user: user;
+  user: user | void;
+  message: string;
 };
 
 // user delete

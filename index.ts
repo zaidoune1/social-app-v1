@@ -1,5 +1,5 @@
 import express, { ErrorRequestHandler } from "express";
-import { getAllUsers, userAdd } from "./src/handlers/userHandlers";
+import { getUser, getUsers, userAdd } from "./src/handlers/userHandlers";
 import { initDb } from "./src/utils/dbCall";
 
 const app = express();
@@ -9,8 +9,9 @@ const app = express();
 
   const PORT = process.env.PORT || 3000;
   app.use(express.json());
-  app.get("/users", getAllUsers);
+  app.get("/users", getUsers);
   app.post("/user", userAdd);
+  app.get("/user", getUser);
 
   const errorHandling: ErrorRequestHandler = (err, req, res, next) => {
     return res.status(400).send(`error handilng : ${err}`);

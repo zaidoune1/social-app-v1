@@ -71,19 +71,32 @@ export class SqlMemoryDb implements GetDaos {
   updatePost(id: number, post: posts): Promise<void | posts> {
     throw new Error("Method not implemented.");
   }
-  addUser(user: user): void {
+  async addUser(user: user): Promise<user | void> {
+    const query =
+      "INSERT INTO Users (id, userName, lastName, email, password ) VALUES (?, ?, ?, ?, ?)";
+
+    await this.db.run(
+      query,
+      user.id,
+      user.userName,
+      user.lastName,
+      user.email,
+      user.password
+    );
+  }
+  async getOneUser(id: string): Promise<user | void> {
+    const query = `SELECT * FROM Users WHERE Users.id = ?`;
+    return await this.db.get(query, id);
+  }
+
+  async getAllUsers(): Promise<user[]> {
+    const query = "SELECT * FROM Users";
+    return this.db.all<user[]>(query);
+  }
+  deleteUsers(id: string): Promise<string | void> {
     throw new Error("Method not implemented.");
   }
-  getOneUser(id: number): void | user {
-    throw new Error("Method not implemented.");
-  }
-  async getAllUsers(): Promise<void | user[]> {
-    const query = "SELECT * FROM users";
-  }
-  deleteUsers(id: number): Promise<string | void> {
-    throw new Error("Method not implemented.");
-  }
-  updateUsers(id: number, user: user): Promise<void | user> {
+  updateUsers(id: string, user: user): Promise<void | user> {
     throw new Error("Method not implemented.");
   }
 }
