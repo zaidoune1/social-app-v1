@@ -9,6 +9,7 @@ import {
   createUserRes,
   userObj,
 } from "../utils/handlerUserTypes";
+import bcrypt, { genSalt, genSaltSync } from "bcrypt";
 
 export const userAdd: ExpressHandlers<createUserReq, createUserRes> = async (
   req,
@@ -21,12 +22,23 @@ export const userAdd: ExpressHandlers<createUserReq, createUserRes> = async (
       error: `all this  field is required ${handelFileds.join(" and ")}`,
     });
 
+  const salt = 10;
+
+  const passwordSalt: any = await bcrypt.genSalt(salt);
+
+  const passwordHash = await bcrypt.hash(
+    req.body.password as any,
+    passwordSalt
+  );
+
+  if (!passwordHash) throw Error("password probleme");
+
   const newuser: any = {
     id: crypto.randomUUID(),
     userName: req.body.userName,
     email: req.body.email,
     lastName: req.body.lastName,
-    password: req.body.password,
+    password: passwordHash,
   };
 
   if (await db.getUserByEmail(newuser.email))
@@ -50,7 +62,12 @@ export const login: ExpressHandlers<AuthReq, AuthRes> = async (req, res) => {
   const findUser = await db.getUserByEmail(email);
   if (!findUser) return res.status(400).json({ message: "user not found" });
 
-  if (password !== findUser.password)
+  const isValidPassword: any = await bcrypt.compare(
+    password,
+    findUser.password as any
+  );
+
+  if (!isValidPassword)
     return res.status(403).json({ message: " incorrect password" });
 
   const tokenAccess = process.env.TOKEN_ACCESS;
