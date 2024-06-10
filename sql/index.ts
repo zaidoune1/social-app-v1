@@ -6,7 +6,6 @@ import { user } from "../types/user";
 import sqlite3 from "sqlite3";
 import { open as sqLiteDb, Database } from "sqlite";
 import path from "path";
-import { db, initDb } from "../src/utils/dbCall";
 
 export class SqlMemoryDb implements GetDaos {
   private db!: Database<sqlite3.Database, sqlite3.Statement>;
@@ -15,6 +14,7 @@ export class SqlMemoryDb implements GetDaos {
       filename: path.join(__dirname, "socialApp.sqlite"),
       driver: sqlite3.Database,
     });
+    this.db.run("PRAGMA foreign_keys = ON;");
     await this.db
       .migrate({
         migrationsPath: path.join(__dirname, "migrations"),
@@ -87,6 +87,11 @@ export class SqlMemoryDb implements GetDaos {
   async getOneUser(id: string): Promise<user | void> {
     const query = `SELECT * FROM Users WHERE Users.id = ?`;
     return await this.db.get(query, id);
+  }
+
+  async getUserByEmail(email: string): Promise<user | void> {
+    const query = `SELECT * FROM Users WHERE Users.email = ?`;
+    return await this.db.get(query, email);
   }
 
   async getAllUsers(): Promise<user[]> {

@@ -3,9 +3,11 @@ import { user } from "../user";
 export interface usersDaos {
   addUser(user: user): Promise<user | void>;
 
+  getUserByEmail(email: string): Promise<user | void>;
+
   getOneUser(id: string): Promise<user | void>;
 
-  getAllUsers(): Promise<user[] | void>;
+  getAllUsers(): Promise<user[] | undefined>;
 
   deleteUsers(id: string): Promise<string | void>;
 
