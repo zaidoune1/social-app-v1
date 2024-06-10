@@ -1,5 +1,6 @@
 import { ExpressHandlers } from "../utils/ExpressHandlers";
 import { accessToken } from "../utils/auth";
+import { bcryptPasswordHash, comparePassword } from "../utils/bcrypt";
 import { db } from "../utils/dbCall";
 import { handelError } from "../utils/handelFields";
 import {
@@ -9,7 +10,7 @@ import {
   createUserRes,
   userObj,
 } from "../utils/handlerUserTypes";
-import bcrypt, { genSalt, genSaltSync } from "bcrypt";
+import bcrypt from "bcrypt";
 
 export const userAdd: ExpressHandlers<createUserReq, createUserRes> = async (
   req,
@@ -22,14 +23,7 @@ export const userAdd: ExpressHandlers<createUserReq, createUserRes> = async (
       error: `all this  field is required ${handelFileds.join(" and ")}`,
     });
 
-  const salt = 10;
-
-  const passwordSalt: any = await bcrypt.genSalt(salt);
-
-  const passwordHash = await bcrypt.hash(
-    req.body.password as any,
-    passwordSalt
-  );
+  const passwordHash = await bcryptPasswordHash(req.body.password as string);
 
   if (!passwordHash) throw Error("password probleme");
 
@@ -62,10 +56,7 @@ export const login: ExpressHandlers<AuthReq, AuthRes> = async (req, res) => {
   const findUser = await db.getUserByEmail(email);
   if (!findUser) return res.status(400).json({ message: "user not found" });
 
-  const isValidPassword: any = await bcrypt.compare(
-    password,
-    findUser.password as any
-  );
+  const isValidPassword = await comparePassword(password, findUser.password);
 
   if (!isValidPassword)
     return res.status(403).json({ message: " incorrect password" });
