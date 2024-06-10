@@ -10,7 +10,6 @@ import {
   createUserRes,
   userObj,
 } from "../utils/handlerUserTypes";
-import bcrypt from "bcrypt";
 
 export const userAdd: ExpressHandlers<createUserReq, createUserRes> = async (
   req,
