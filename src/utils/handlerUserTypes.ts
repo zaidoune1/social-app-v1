@@ -1,15 +1,15 @@
 import { user } from "../../types/user";
 
 // add user
-export type createUserRes = {};
-export type createUserReq = Pick<
-  user,
-  "id" | "email" | "userName" | "password" | "lastName"
->;
+export type createUserRes = {
+  message?: string;
+  tokenAccess: string;
+};
+export type createUserReq = Partial<user>;
 
 // get all users
 export type getAllUsersRes = {
-  users: user[];
+  users: user[] | undefined;
 };
 export type getAllUsersReq = {};
 
@@ -17,7 +17,7 @@ export type getAllUsersReq = {};
 export type getUserReq = {};
 
 export type getUserRes = {
-  user: Promise<user | void>;
+  user: user | void;
   message: string;
 };
 
@@ -39,3 +39,24 @@ export type updateUserRes = {
   user: user | void;
   message?: string;
 };
+
+// Auth
+
+export type AuthReq = {
+  email: string;
+  password: string;
+};
+
+export type AuthRes = {
+  user: Omit<user, "id" | "password">;
+  secretToken: string;
+  message?: string;
+};
+
+export type userObj = Omit<user, "id" | "password">;
+
+// token verify
+
+export type TokenReq = {};
+
+export type TokenRes = {};

@@ -4,7 +4,7 @@ import { GetDaos } from "./getDaos";
 
 export let db: GetDaos;
 
-export const initDb = async () => {
+export async function initDb() {
   // return (db = new InMemoryDataBase());
   return (db = await new SqlMemoryDb().connectDb());
-};
+}
