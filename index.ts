@@ -16,10 +16,11 @@ const app = express();
 
 (async () => {
   await initDb();
-
   dotenv.config();
   const PORT = process.env.PORT || 3000;
+
   app.use(express.json());
+  app.get("/healthz", (req, res) => res.send({ status: "✌️" }));
   app.post("/login", asyncHandler(login));
   app.post("/signup", asyncHandler(userAdd));
   app.use(tokenVerify);

@@ -26,6 +26,8 @@ export const tokenVerify: ExpressHandlers<TokenReq, TokenRes> = async (
     if (err) throw new Error("TOKEN_ACCESS is not defined");
     const findUser = await db.getOneUser(decoded.id);
     if (!findUser) throw new Error("bad token");
+
+    res.locals.userId = findUser.id;
   });
 
   next();

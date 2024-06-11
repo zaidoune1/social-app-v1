@@ -12,11 +12,14 @@ import {
 } from "../utils/handlerUserTypes";
 import { db } from "../utils/dbCall";
 import { user } from "../../types/user";
+import { veryficationUserId } from "../utils/verificationUserId";
 
 export const getUsers: ExpressHandlers<getAllUsersReq, getAllUsersRes> = async (
   req,
   res
 ) => {
+  // const user = await veryficationUserId(res.locals.userId);
+
   const getAllUsersdb = await db.getAllUsers();
 
   if (!getAllUsersdb)
