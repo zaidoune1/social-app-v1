@@ -11,7 +11,12 @@ import dotenv from "dotenv";
 import { tokenVerify } from "./src/middlewares/authMiddleware";
 import asyncHandler from "express-async-handler";
 import { errorHandling } from "./src/middlewares/errorRequestHandler";
-import { createPost, deleteAllusers } from "./src/handlers/postHandlers";
+import {
+  createPost,
+  deletePost,
+  getAllPosts,
+  updatePosts,
+} from "./src/handlers/postHandlers";
 
 const app = express();
 
@@ -30,6 +35,9 @@ const app = express();
   app.get("/user", asyncHandler(getUser));
   app.delete("/user", asyncHandler(deleteUser));
   app.put("/user", asyncHandler(updateUser));
+  app.delete("/post", asyncHandler(deletePost));
+  app.get("/posts", asyncHandler(getAllPosts));
+  app.put("/post", asyncHandler(updatePosts));
 
   app.use(errorHandling);
 

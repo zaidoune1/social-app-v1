@@ -6,6 +6,7 @@ import { user } from "../types/user";
 import sqlite3 from "sqlite3";
 import { open as sqLiteDb, Database } from "sqlite";
 import path from "path";
+import { query } from "express";
 
 export class SqlMemoryDb implements GetDaos {
   private db!: Database<sqlite3.Database, sqlite3.Statement>;
@@ -68,17 +69,22 @@ export class SqlMemoryDb implements GetDaos {
       post.postedAt
     );
   }
-  async getOnePost(id: string): Promise<void | posts> {
-    throw new Error("Method not implemented.");
+  async getOnePost(id: string): Promise<posts | void> {
+    const query = "SELECT * FROM posts WHERE id = ?";
+
+    return await this.db.get(query, id);
   }
-  async getAllPostes(): Promise<void | posts[]> {
-    throw new Error("Method not implemented.");
+  async getAllPostes(): Promise<posts[] | void> {
+    const query = "SELECT * FROM posts";
+    return await this.db.all<posts[]>(query);
   }
   async deletePosts(id: string): Promise<string | void> {
-    throw new Error("Method not implemented.");
+    const query = "DELETE FROM posts WHERE id = ?";
+    await this.db.run(query, id);
   }
-  async updatePost(id: string, post: posts): Promise<void | posts> {
-    throw new Error("Method not implemented.");
+  async updatePost(id: string, newPost: posts): Promise<void | posts> {
+    const query = "UPDATE posts SET post = ?, url = ? WHERE id = ?";
+    await this.db.run(query, newPost.post, newPost.url, id);
   }
   async addUser(user: user): Promise<user | void> {
     const query =

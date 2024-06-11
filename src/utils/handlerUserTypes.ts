@@ -55,21 +55,3 @@ export type AuthRes = {
 };
 
 export type userObj = Omit<user, "id" | "password">;
-
-// token verify
-
-export type TokenReq = {};
-
-export type TokenRes = {};
-
-// create posts
-
-export type createPostReq = {
-  post: string;
-  url: string;
-};
-
-export type createPostRes = {
-  post: posts;
-  message?: string;
-};

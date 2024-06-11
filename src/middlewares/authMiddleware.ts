@@ -1,6 +1,6 @@
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { ExpressHandlers } from "../utils/ExpressHandlers";
-import { TokenReq, TokenRes } from "../utils/handlerUserTypes";
+import { TokenReq, TokenRes } from "../utils/handlerTokenTypes";
 import { db } from "../utils/dbCall";
 
 export const tokenVerify: ExpressHandlers<TokenReq, TokenRes> = async (

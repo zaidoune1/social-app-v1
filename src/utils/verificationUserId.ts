@@ -5,5 +5,5 @@ export const veryficationUserId = async (id: string) => {
 
   if (!findUser) throw Error("user not found");
 
-  return findUser;
+  return findUser.id;
 };
