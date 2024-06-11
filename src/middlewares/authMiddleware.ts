@@ -30,7 +30,6 @@ export const tokenVerify: ExpressHandlers<TokenReq, TokenRes> = async (
       return res.status(401).json({ error: "bad token" });
     }
     res.locals.userId = findUser.id;
-    req.query.user = findUser.id;
     next();
   } catch (err) {
     return res.status(401).json({ error: "not authorization" });

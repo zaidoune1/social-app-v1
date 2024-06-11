@@ -12,7 +12,7 @@ export const createPost: ExpressHandlers<createPostReq, createPostRes> = async (
   if (!post || !url)
     return res.status(400).json({ error: "post and url is required" });
 
-  const getuserId = await veryficationUserId(req.query.user);
+  const getuserId = await veryficationUserId(res.locals.userId);
 
   if (!getuserId) throw Error("not authorised");
 
