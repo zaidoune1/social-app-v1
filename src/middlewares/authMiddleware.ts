@@ -1,4 +1,4 @@
-import jwt from "jsonwebtoken";
+import jwt, { JwtPayload } from "jsonwebtoken";
 import { ExpressHandlers } from "../utils/ExpressHandlers";
 import { TokenReq, TokenRes } from "../utils/handlerUserTypes";
 import { db } from "../utils/dbCall";
@@ -22,13 +22,17 @@ export const tokenVerify: ExpressHandlers<TokenReq, TokenRes> = async (
     throw new Error("token not found");
   }
 
-  jwt.verify(getToken, tokenAccess, async (err, decoded: any) => {
-    if (err) throw new Error("TOKEN_ACCESS is not defined");
+  try {
+    const decoded = jwt.verify(getToken, tokenAccess) as { id: string };
+
     const findUser = await db.getOneUser(decoded.id);
-    if (!findUser) throw new Error("bad token");
-
+    if (!findUser) {
+      return res.status(401).json({ error: "bad token" });
+    }
     res.locals.userId = findUser.id;
-  });
-
-  next();
+    req.query.user = findUser.id;
+    next();
+  } catch (err) {
+    return res.status(401).json({ error: "not authorization" });
+  }
 };

@@ -10,6 +10,10 @@ export class InMemoryDataBase implements GetDaos {
   private comments: comments[] = [];
   private likes: likes[] = [];
 
+  async getUserByEmail(email: string): Promise<user | void> {
+    return this.users.find((el) => el.email === email);
+  }
+
   async addComment(comment: comments): Promise<void> {
     this.comments.push(comment);
   }
@@ -43,17 +47,17 @@ export class InMemoryDataBase implements GetDaos {
   async addPost(post: posts): Promise<void> {
     this.posts.push(post);
   }
-  async getOnePost(id: number): Promise<void | posts> {
+  async getOnePost(id: string): Promise<posts | void> {
     const findPost = this.posts.find((item) => item.id === id);
     return findPost;
   }
   async getAllPostes(): Promise<void | posts[]> {
     return this.posts;
   }
-  async deletePosts(id: number): Promise<string | void> {
+  async deletePosts(id: string): Promise<string | void> {
     this.posts.filter((item) => item.id !== id);
   }
-  async updatePost(id: number, postUpdated: posts): Promise<void | posts> {
+  async updatePost(id: string, postUpdated: posts): Promise<void | posts> {
     this.posts.map((post) => (post.id === id ? postUpdated : post));
   }
   async addUser(user: user): Promise<void> {
@@ -62,7 +66,7 @@ export class InMemoryDataBase implements GetDaos {
   async getOneUser(id: string): Promise<user | void> {
     return this.users.find((user) => user.id === id);
   }
-  async getAllUsers(): Promise<void | user[]> {
+  async getAllUsers(): Promise<user[] | undefined> {
     return this.users;
   }
   async deleteUsers(id: string): Promise<string | void> {

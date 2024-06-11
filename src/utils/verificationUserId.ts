@@ -1,4 +1,3 @@
-import { user } from "../../types/user";
 import { db } from "./dbCall";
 
 export const veryficationUserId = async (id: string) => {

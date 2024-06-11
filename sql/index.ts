@@ -56,19 +56,28 @@ export class SqlMemoryDb implements GetDaos {
   updateLikes(id: number, like: likes): Promise<void | likes> {
     throw new Error("Method not implemented.");
   }
-  addPost(post: posts): Promise<void> {
+  async addPost(post: posts): Promise<posts | void> {
+    const query =
+      "INSERT INTO Posts (id, userId, post, url, postedAt) VALUES(?, ?, ?, ?, ?)";
+    await this.db.run(
+      query,
+      post.id,
+      post.userId,
+      post.post,
+      post.url,
+      post.postedAt
+    );
+  }
+  async getOnePost(id: string): Promise<void | posts> {
     throw new Error("Method not implemented.");
   }
-  getOnePost(id: number): Promise<void | posts> {
+  async getAllPostes(): Promise<void | posts[]> {
     throw new Error("Method not implemented.");
   }
-  getAllPostes(posts: posts[]): Promise<void | posts[]> {
+  async deletePosts(id: string): Promise<string | void> {
     throw new Error("Method not implemented.");
   }
-  deletePosts(id: number): Promise<string | void> {
-    throw new Error("Method not implemented.");
-  }
-  updatePost(id: number, post: posts): Promise<void | posts> {
+  async updatePost(id: string, post: posts): Promise<void | posts> {
     throw new Error("Method not implemented.");
   }
   async addUser(user: user): Promise<user | void> {
