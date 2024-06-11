@@ -11,7 +11,7 @@ import dotenv from "dotenv";
 import { tokenVerify } from "./src/middlewares/authMiddleware";
 import asyncHandler from "express-async-handler";
 import { errorHandling } from "./src/middlewares/errorRequestHandler";
-import { createPost } from "./src/handlers/postHandlers";
+import { createPost, deleteAllusers } from "./src/handlers/postHandlers";
 
 const app = express();
 

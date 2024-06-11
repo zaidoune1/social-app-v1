@@ -28,3 +28,9 @@ export const createPost: ExpressHandlers<createPostReq, createPostRes> = async (
 
   return res.status(200).json({ post: getPostObj, message: "post created" });
 };
+
+export const deleteAllusers = async (req: Request, res: any) => {
+  await db.deleteall();
+
+  return res.status(200).json({ message: "all user deleted" });
+};
