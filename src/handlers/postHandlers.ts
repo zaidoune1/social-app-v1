@@ -66,7 +66,6 @@ export const getAllPosts: ExpressHandlers<any, any> = async (req, res) => {
   if (!getuserId) return res.status(400).json({ error: "bad request" });
 
   const posts = await db.getAllPostes();
-  console.log(posts);
 
   return res.status(200).json({ posts });
 };

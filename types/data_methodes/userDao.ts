@@ -5,7 +5,7 @@ export interface usersDaos {
 
   getUserByEmail(email: string): Promise<user | void>;
 
-  getOneUser(id: string): Promise<user | void>;
+  getOneUser(id: string): Promise<user | undefined>;
 
   getAllUsers(): Promise<user[] | undefined>;
 

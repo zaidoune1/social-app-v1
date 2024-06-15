@@ -63,7 +63,7 @@ export class InMemoryDataBase implements GetDaos {
   async addUser(user: user): Promise<void> {
     this.users.push(user);
   }
-  async getOneUser(id: string): Promise<user | void> {
+  async getOneUser(id: string): Promise<user | undefined> {
     return this.users.find((user) => user.id === id);
   }
   async getAllUsers(): Promise<user[] | undefined> {

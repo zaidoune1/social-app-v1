@@ -8,6 +8,10 @@ export const tokenVerify: ExpressHandlers<TokenReq, TokenRes> = async (
   res,
   next
 ) => {
+  const refreshToken = req.cookies.social_cookie;
+
+  if (!refreshToken)
+    return res.status(400).json({ message: "please login ! " });
   const authorization = req.headers?.authorization;
 
   if (!authorization || !authorization.startsWith("Bearer "))

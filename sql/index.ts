@@ -99,7 +99,7 @@ export class SqlMemoryDb implements GetDaos {
       user.password
     );
   }
-  async getOneUser(id: string): Promise<user | void> {
+  async getOneUser(id: string): Promise<user | undefined> {
     const query = `SELECT * FROM Users WHERE Users.id = ?`;
     return await this.db.get(query, id);
   }

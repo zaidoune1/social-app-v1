@@ -55,3 +55,10 @@ export type AuthRes = {
 };
 
 export type userObj = Omit<user, "id" | "password">;
+
+// logout
+
+export type LogoutReq = {};
+export type LogoutRes = {
+  message?: string;
+};
