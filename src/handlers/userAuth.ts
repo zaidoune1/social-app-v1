@@ -17,6 +17,7 @@ import {
 } from "../utils/handlerUserTypes";
 import { veryficationUserId } from "../utils/verificationUserId";
 
+let refreshTokens = []; // Stockage temporaire des refresh tokens
 let blacklistedAccessTokens = new Set();
 
 export const userAdd: ExpressHandlers<createUserReq, createUserRes> = async (

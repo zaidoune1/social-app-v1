@@ -19,6 +19,9 @@ import {
   getAllPosts,
   updatePosts,
 } from "./src/handlers/postHandlers";
+import { routeAuth } from "./src/routes/authRoutes";
+import { routeUsers } from "./src/routes/userRoute";
+import { routePosts } from "./src/routes/postsRoutes";
 
 const app = express();
 
@@ -32,19 +35,25 @@ const app = express();
   const PORT = process.env.PORT || 3000;
 
   app.get("/healthz", (req, res) => res.send({ status: "✌️" }));
-  app.post("/login", asyncHandler(login));
-  app.post("/signup", asyncHandler(userAdd));
-  app.get("/refreshToken", asyncHandler(refreshToken));
-  app.use(tokenVerify);
-  app.post("/post", asyncHandler(createPost));
-  app.get("/users", asyncHandler(getUsers));
-  app.get("/user", asyncHandler(getUser));
-  app.delete("/user", asyncHandler(deleteUser));
-  app.put("/user", asyncHandler(updateUser));
-  app.delete("/post", asyncHandler(deletePost));
-  app.get("/posts", asyncHandler(getAllPosts));
-  app.put("/post", asyncHandler(updatePosts));
-  app.get("/logout", asyncHandler(logout));
+
+  app.use("/", routeAuth);
+  app.use("/", routeUsers);
+  app.use("/", routePosts);
+
+  // app.get("/healthz", (req, res) => res.send({ status: "✌️" }));
+  // app.post("/login", asyncHandler(login));
+  // app.post("/signup", asyncHandler(userAdd));
+  // app.get("/refreshToken", asyncHandler(refreshToken));
+  // app.use(tokenVerify);
+  // app.post("/post", asyncHandler(createPost));
+  // app.get("/users", asyncHandler(getUsers));
+  // app.get("/user", asyncHandler(getUser));
+  // app.delete("/user", asyncHandler(deleteUser));
+  // app.put("/user", asyncHandler(updateUser));
+  // app.delete("/post", asyncHandler(deletePost));
+  // app.get("/posts", asyncHandler(getAllPosts));
+  // app.put("/post", asyncHandler(updatePosts));
+  // app.get("/logout", asyncHandler(logout));
 
   app.use(errorHandling);
 
